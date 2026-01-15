@@ -31,6 +31,7 @@ function deleteHistory(index) {
 function showHome() {
     document.getElementById('home').style.display = 'block';
     document.getElementById('history').style.display = 'none';
+    document.getElementById('starred').style.display = 'none';
     document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelector('.nav-btn:first-child').classList.add('active');
 }
@@ -38,7 +39,8 @@ function showHome() {
 function showHistory() {
     document.getElementById('home').style.display = 'none';
     document.getElementById('history').style.display = 'block';
+    document.getElementById('starred').style.display = 'none';
     document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelector('.nav-btn:last-child').classList.add('active');
+    document.querySelector('.nav-btn:nth-child(2)').classList.add('active');
     loadHistory();
 }
