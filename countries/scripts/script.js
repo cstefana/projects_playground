@@ -41,7 +41,7 @@ async function searchCountry(queryParam = null, isCode = false) {
             <div class="country-card">
                 <img src="${country.flags.svg}" alt="Flag" class="flag">
                 <h2>${country.flag} ${country.name.common}</h2>
-                <div class="star-container"><span class="star" onclick="toggleStar('${country.name.common}', '${languages.replace(/'/g, "\\'")}')" style="color: ${isStarred('${country.name.common}') ? '#ffd700' : '#ccc'};">${isStarred('${country.name.common}') ? '★' : '☆'}</span></div>
+                <div class="star-container"><span class="star" onclick="toggleStar('${country.name.common}', '${languages.replace(/'/g, "\\'")}')" data-country="${country.name.common}">☆</span></div>
                 
                 <div class="info-group"><strong>Official Name:</strong> ${country.name.official}</div>
                 <div class="info-group"><strong>Capital:</strong> ${country.capital ? country.capital[0] : 'N/A'}</div>
@@ -63,6 +63,9 @@ async function searchCountry(queryParam = null, isCode = false) {
 
         // save to history
         saveSearch(country.name.common);
+        
+        // update star appearance
+        updateStar(country.name.common);
 
     } catch (error) {
         resultDiv.innerHTML = `<p class="error">Oops! ${error.message}. Try again.</p>`;

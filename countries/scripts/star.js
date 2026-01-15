@@ -13,7 +13,7 @@ function toggleStar(countryName, languages) {
 
 function updateStar(countryName) {
     const star = document.querySelector('.star');
-    if (star) {
+    if (star && star.getAttribute('data-country') === countryName) {
         star.textContent = isStarred(countryName) ? '★' : '☆';
         star.style.color = isStarred(countryName) ? '#ffd700' : '#ccc';
     }
@@ -30,7 +30,7 @@ function loadStarred() {
     list.innerHTML = '';
     starred.forEach((item, index) => {
         const li = document.createElement('li');
-        li.innerHTML = `<div><strong>${item.name}</strong><br>Languages: ${item.languages}</div><span class="star" onclick="toggleStar('${item.name}', '${item.languages}'); loadStarred();" style="color: #ffd700;">★</span>`;
+        li.innerHTML = `<div><strong>${item.name}</strong><br>Languages: ${item.languages}</div><span class="star" onclick="toggleStar('${item.name}', '${item.languages}'); loadStarred(); updateStar('${item.name}');" style="color: #ffd700;">★</span>`;
         list.appendChild(li);
     });
 }
