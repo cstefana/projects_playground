@@ -76,11 +76,20 @@ async function expandCountry(countryName, button) {
         detailsDiv.innerHTML = '<p style="color: #a6adc8;">Loading...</p>';
         
         try {
-            const response = await fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`);
-            if (!response.ok) throw new Error('Failed to fetch');
+            // check cache first
+            const cacheKey = `name:${countryName}`;
+            let countryData = getCachedCountry(cacheKey);
             
-            const data = await response.json();
-            const country = data[0];
+            if (!countryData) {
+                // fetch from API if not in cache
+                const response = await fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`);
+                if (!response.ok) throw new Error('Failed to fetch');
+                countryData = await response.json();
+                // cache the result
+                setCachedCountry(cacheKey, countryData);
+            }
+            
+            const country = Array.isArray(countryData) ? countryData[0] : countryData;
             
             const continents = country.continents ? country.continents.join(', ') : 'N/A';
             const area = country.area ? `${country.area.toLocaleString()} km²` : 'N/A';
