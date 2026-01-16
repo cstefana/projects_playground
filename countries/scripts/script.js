@@ -8,6 +8,20 @@ async function searchCountry(queryParam = null, isCode = false) {
         return;
     }
 
+    // check cache first
+    const cacheKey = isCode ? `code:${searchTerm}` : `name:${searchTerm}`;
+    const cachedData = getCachedCountry(cacheKey);
+    
+    if (cachedData) {
+        resultDiv.innerHTML = cachedData.map(country => createCountryCard(country)).join('');
+        updateStar();
+        cachedData.forEach(country => {
+            if (typeof saveSearch === "function") saveSearch(country.name.common);
+            if (typeof updateStar === "function") updateStar(country.name.common);
+        });
+        return;
+    }
+
     resultDiv.innerHTML = `<p style="color: var(--primary-purple)">Searching for "${searchTerm}"...</p>`;
 
     try {
@@ -20,6 +34,9 @@ async function searchCountry(queryParam = null, isCode = false) {
         if (!response.ok) throw new Error('No countries found matching that name');
 
         const data = await response.json();
+        
+        // cache the results
+        setCachedCountry(cacheKey, data);
 
         resultDiv.innerHTML = data.map(country => createCountryCard(country)).join('');
 
