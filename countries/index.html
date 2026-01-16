@@ -11,6 +11,7 @@
     <nav class="navbar">
         <button class="nav-btn active" onclick="showHome()">Home</button>
         <button class="nav-btn" onclick="showHistory()">History</button>
+        <button class="nav-btn" onclick="showStarred()">Starred</button>
     </nav>
 
     <div id="home" class="page">
@@ -32,7 +33,15 @@
         </div>
     </div>
 
+    <div id="starred" class="page" style="display: none;">
+        <div class="container">
+            <h2>Starred Countries</h2>
+            <ul class="starred-list"></ul>
+        </div>
+    </div>
+
     <script src="scripts/script.js"></script>
     <script src="scripts/history.js"></script>
+    <script src="scripts/star.js"></script>
 </body>
 </html>
