@@ -49,7 +49,7 @@ async function searchCountry(queryParam = null, isCode = false) {
         });
 
     } catch (error) {
-        resultDiv.innerHTML = `<p class="error">Oops! ${error.message}. ✨</p>`;
+        resultDiv.innerHTML = `<p class="error">Oops! ${error.message}.</p>`;
     }
 }
 
@@ -80,7 +80,7 @@ function createCountryCard(country) {
             <div class="info-group"><strong>Neighbors:</strong><br>${bordersHTML}</div>
             <div class="info-group">
                 <a href="${country.maps.googleMaps}" target="_blank" style="color: var(--accent-pink); text-decoration: none; font-weight: bold;">
-                    View Map ↗
+                    View country on map
                 </a>
             </div>
         </div>
@@ -111,3 +111,11 @@ document.querySelector('.country-input').addEventListener('keydown', function(ev
         searchCountry();
     }
 });
+
+function showHome() {
+    document.getElementById('home').style.display = 'block';
+    document.getElementById('history').style.display = 'none';
+    document.getElementById('starred').style.display = 'none';
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelector('.nav-btn:first-child').classList.add('active');
+}
