@@ -18,7 +18,7 @@ function updateStar(countryName = null) {
     stars.forEach(star => {
         const countryAttribute = star.getAttribute('data-country');
         
-        // if we provided a specific name, only update that one. 
+        // if we provided a specific name, only update that one
         // otherwise, update every star based on its own data-country attribute.
         if (!countryName || countryAttribute === countryName) {
             const starredStatus = isStarred(countryAttribute);
@@ -68,9 +68,9 @@ function showStarred() {
 async function expandCountry(countryName, button) {
     const detailsDiv = button.closest('.starred-item').querySelector('.starred-details');
     
-    // Toggle expand/collapse
+    // toggle expand/collapse
     if (detailsDiv.style.display === 'none') {
-        // Expanding
+        // expanding
         button.textContent = '▲';
         detailsDiv.style.display = 'block';
         detailsDiv.innerHTML = '<p style="color: #a6adc8;">Loading...</p>';

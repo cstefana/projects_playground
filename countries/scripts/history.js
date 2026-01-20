@@ -28,14 +28,6 @@ function deleteHistory(index) {
     loadHistory();
 }
 
-function showHome() {
-    document.getElementById('home').style.display = 'block';
-    document.getElementById('history').style.display = 'none';
-    document.getElementById('starred').style.display = 'none';
-    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelector('.nav-btn:first-child').classList.add('active');
-}
-
 function showHistory() {
     document.getElementById('home').style.display = 'none';
     document.getElementById('history').style.display = 'block';
