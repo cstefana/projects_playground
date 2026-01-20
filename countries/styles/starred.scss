@@ -1,0 +1,84 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// starred styles
+.starred-list {
+    list-style: none;
+    padding: 0;
+
+    li {
+        background: var(--soft-pink);
+        padding: $spacing-md;
+        margin: $spacing-sm 0;
+        border-radius: $border-radius-md;
+        box-shadow: $shadow-dark;
+        @include flex-between;
+        @include card-hover;
+    }
+}
+
+.starred-item {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.starred-header {
+    @include flex-between;
+    width: 100%;
+}
+
+.starred-info {
+    flex: 1;
+}
+
+.starred-actions {
+    display: flex;
+    gap: $spacing-sm;
+    align-items: center;
+}
+
+.expand-btn {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    font-size: 16px;
+    cursor: pointer;
+    padding: $spacing-xs $spacing-sm;
+    transition: $transition-color;
+
+    &:hover {
+        color: var(--mauve) !important;
+    }
+}
+
+.starred-details {
+    margin-top: $spacing-md;
+    padding-top: $spacing-md;
+    border-top: 1px dashed var(--light-overlay);
+    width: 100%;
+}
+
+.expanded-details {
+    @include flex-column;
+    gap: $spacing-md;
+}
+
+.details-flag {
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.detail-row {
+    text-align: left;
+    padding: $spacing-xs 0;
+    border-bottom: 1px dashed var(--light-overlay);
+    font-size: 0.95rem;
+
+    strong {
+        color: var(--sky);
+        font-weight: 600;
+    }
+}

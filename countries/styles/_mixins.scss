@@ -1,0 +1,70 @@
+// reusable mixins for styling components
+// this contains stuff like flex-center, button-base, card-hover
+
+@use 'variables' as *;
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin button-base {
+    padding: 12px 30px;
+    background-color: var(--mauve);
+    color: var(--base);
+    border: none;
+    border-radius: $border-radius-lg;
+    cursor: pointer;
+    font-weight: 600;
+    transition: $transition-default;
+    box-shadow: $shadow-small;
+
+    &:hover {
+        background-color: var(--blue);
+        transform: translateY(-2px);
+        box-shadow: $shadow-medium;
+    }
+}
+
+@mixin nav-button {
+    padding: $spacing-sm $spacing-lg;
+    margin: 0 $spacing-sm;
+    background: var(--button-bg, $soft-pink);
+    border: 2px solid var(--button-text, $mauve);
+    border-radius: $border-radius-lg;
+    cursor: pointer;
+    font-weight: 600;
+    transition: $transition-default;
+    color: var(--button-text, $mauve);
+
+    &.active {
+        background: var(--button-active-bg, $mauve);
+        color: var(--button-active-text, $base);
+    }
+
+    &:hover {
+        background: var(--mauve);
+        color: var(--base);
+    }
+}
+
+@mixin card-hover {
+    transition: $transition-default;
+
+    &:hover {
+        background: var(--light-overlay);
+        transform: translateY(-2px);
+    }
+}

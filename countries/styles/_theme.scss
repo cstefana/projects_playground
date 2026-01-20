@@ -1,0 +1,51 @@
+@use 'variables' as *;
+
+// theme mixin
+@mixin theme-colors($theme: 'dark') {
+    @if $theme == 'light' {
+        --primary-purple: #{$light-mauve};
+        --dark-purple: #{$light-blue};
+        --soft-pink: #{$light-surface0};
+        --accent-pink: #{$light-red};
+        --card-bg: #{$light-base};
+        --text-main: #{$light-text};
+        --base: #{$light-base};
+        --mantle: #{$light-mantle};
+        --crust: #{$light-crust};
+        --mauve: #{$light-mauve};
+        --blue: #{$light-blue};
+        --peach: #{$light-peach};
+        --green: #{$light-green};
+        --teal: #{$light-sapphire};
+        --sky: #{$light-blue};
+        --red: #{$light-red};
+        --light-overlay: #{$light-surface0};
+        --teal-hover: #{$light-surface1};
+        --button-text: #{$light-text};
+        --button-bg: #{$light-mantle};
+        --button-active-bg: #{$light-mauve};
+        --button-active-text: #{$light-base};
+        --heading-shadow: none;
+    } @else {
+        // dark
+        --primary-purple: #{$dark-mauve};
+        --dark-purple: #{$dark-blue};
+        --soft-pink: #{$dark-surface0};
+        --accent-pink: #{$dark-red};
+        --card-bg: #{$dark-base};
+        --text-main: #{$dark-text};
+        --base: #{$dark-base};
+        --mantle: #{$dark-mantle};
+        --crust: #{$dark-crust};
+        --mauve: #{$dark-mauve};
+        --blue: #{$dark-blue};
+        --peach: #{$dark-peach};
+        --green: #{$dark-green};
+        --teal: #{$dark-teal};
+        --sky: #{$dark-sky};
+        --red: #{$dark-red};
+        --light-overlay: #{$dark-surface1};
+        --teal-hover: #{$dark-teal};
+        --heading-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+}

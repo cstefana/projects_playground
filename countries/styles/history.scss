@@ -1,0 +1,39 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// history styles
+.history-list {
+    list-style: none;
+    padding: 0;
+
+    li {
+        background: var(--soft-pink);
+        padding: $spacing-md;
+        margin: $spacing-sm 0;
+        border-radius: $border-radius-md;
+        box-shadow: $shadow-dark;
+        cursor: pointer;
+        @include flex-between;
+        @include card-hover;
+    }
+}
+
+.history-term {
+    flex: 1;
+    cursor: pointer;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: var(--red);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    margin-left: $spacing-sm;
+    transition: $transition-color;
+
+    &:hover {
+        color: var(--peach);
+    }
+}
