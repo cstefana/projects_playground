@@ -1,0 +1,125 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'theme' as *;
+
+:root {
+    @include theme-colors('dark');
+}
+
+// Light theme toggle
+html.light-theme {
+    @include theme-colors('light');
+}
+
+html {
+    min-height: 100vh;
+    overscroll-behavior: none;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, var(--base) 0%, var(--crust) 100%);
+    color: var(--text-main);
+    margin: 0;
+    padding: $spacing-lg;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: $container-width;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+h1 {
+    color: var(--mauve);
+    font-size: 2.5rem;
+    margin-bottom: $spacing-2xl;
+    text-shadow: var(--heading-shadow);
+    letter-spacing: -1px;
+}
+
+h2 {
+    margin: 0 0 $spacing-lg 0;
+    color: var(--mauve);
+    font-size: 1.8rem;
+    @include flex-center;
+    gap: $spacing-sm;
+}
+
+button {
+    @include button-base;
+}
+
+// navbar styles
+.navbar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: $spacing-lg;
+}
+
+.nav-btn {
+    @include nav-button;
+}
+
+.nav-btn:hover {
+    background: $mauve;
+    color: $base;
+}
+
+// header styles
+header {
+    position: relative;
+    margin-bottom: $spacing-lg;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-lg;
+    position: relative;
+}
+
+.theme-toggle {
+    position: absolute;
+    left: 0;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: $spacing-sm;
+    transition: $transition-default;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+.star-btn {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    font-size: 22px;
+    cursor: pointer;
+    padding: $spacing-sm;
+    transition: $transition-color;
+
+    &:hover {
+        color: var(--primary-purple);
+    }
+}
+
+.star-btn.starred {
+    color: var(--accent-pink);
+
+    &:hover {
+        color: var(--accent-pink);
+    }
+}
+
+.star {
+    cursor: pointer;
+}

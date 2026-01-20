@@ -1,0 +1,104 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.search-box {
+    display: flex;
+    gap: $spacing-md;
+    margin-bottom: $spacing-3xl;
+    background: var(--surface-0);
+    padding: $spacing-sm;
+    border-radius: $border-radius-lg;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+input {
+    flex: 1;
+    padding: $spacing-md $spacing-xl;
+    border: none;
+    border-radius: $border-radius-lg;
+    font-size: 16px;
+    outline: none;
+    color: var(--text-main);
+    background: var(--base);
+
+    &::placeholder {
+        color: #6c7086;
+    }
+}
+
+#result {
+    margin-top: $spacing-lg;
+}
+
+.result {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: $spacing-lg;
+    margin-top: $spacing-2xl;
+    padding: $spacing-sm;
+}
+
+.country-card {
+    background: var(--card-bg);
+    padding: $spacing-xl;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-card;
+    border: 1px solid #f5e1ff;
+    transition: transform 0.3s ease;
+    height: fit-content;
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+}
+
+.flag {
+    width: 180px;
+    display: block;
+    margin: 0 auto $spacing-xl;
+    border-radius: $border-radius-md;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.info-group {
+    margin-bottom: $spacing-md;
+    border-bottom: 1px dashed var(--light-overlay);
+    padding-bottom: $spacing-sm;
+    text-align: left;
+    font-size: 1.05rem;
+
+    strong {
+        color: var(--sky);
+        font-weight: 600;
+        margin-right: $spacing-xs;
+    }
+}
+
+.error {
+    color: var(--peach);
+    background: var(--soft-pink);
+    padding: $spacing-md;
+    border-radius: $border-radius-lg;
+    border: 1px solid var(--accent-pink);
+    font-weight: 500;
+}
+
+// neighbor links
+.border-tag {
+    display: inline-block;
+    background: var(--light-overlay);
+    color: var(--teal);
+    padding: 2px $spacing-sm;
+    margin: 2px;
+    border-radius: $border-radius-sm;
+    border: 1px solid var(--teal);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: $transition-fast;
+    text-decoration: none;
+
+    &:hover {
+        background: var(--teal-hover);
+        color: var(--base);
+    }
+}

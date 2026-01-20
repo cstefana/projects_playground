@@ -1,0 +1,102 @@
+// dark theme color scheme
+$dark-rosewater: #f5e0dc;
+$dark-flamingo: #f2cdcd;
+$dark-pink: #f5c2e7;
+$dark-mauve: #cba6f7;
+$dark-red: #f38ba8;
+$dark-maroon: #eba0ac;
+$dark-peach: #fab387;
+$dark-yellow: #f9e2af;
+$dark-green: #a6e3a1;
+$dark-teal: #94e2d5;
+$dark-sky: #89dceb;
+$dark-sapphire: #74c7ec;
+$dark-blue: #89b4fa;
+$dark-lavender: #b4befe;
+$dark-text: #cdd6f4;
+$dark-subtext1: #bac2de;
+$dark-subtext0: #a6adc8;
+$dark-overlay2: #9399b2;
+$dark-overlay1: #7f849c;
+$dark-overlay0: #6c7086;
+$dark-surface2: #585b70;
+$dark-surface1: #45475a;
+$dark-surface0: #313244;
+$dark-base: #1e1e2e;
+$dark-mantle: #181825;
+$dark-crust: #11111b;
+
+// light theme color scheme
+$light-rosewater: #dc8a78;
+$light-flamingo: #dd7878;
+$light-pink: #ea76cb;
+$light-mauve: #8839ef;
+$light-red: #d20f39;
+$light-maroon: #e64553;
+$light-peach: #fe640b;
+$light-yellow: #df8e1d;
+$light-green: #40a02b;
+$light-teal: #179299;
+$light-sky: #04a5e5;
+$light-sapphire: #209fb5;
+$light-blue: #1e66f5;
+$light-lavender: #7287fd;
+$light-text: #4c4f69;
+$light-subtext1: #5c5f77;
+$light-subtext0: #6c6f85;
+$light-overlay2: #7c7f93;
+$light-overlay1: #8c8fa1;
+$light-overlay0: #9ca0b0;
+$light-surface2: #acb0be;
+$light-surface1: #bcc0cc;
+$light-surface0: #ccd0da;
+$light-base: #eff1f5;
+$light-mantle: #e6e9ef;
+$light-crust: #dce0e8;
+
+// default is dark theme
+$primary-purple: $dark-mauve;
+$dark-purple: $dark-blue;
+$soft-pink: $dark-surface0;
+$accent-pink: $dark-red;
+$card-bg: $dark-base;
+$text-main: $dark-text;
+$base: $dark-base;
+$mantle: $dark-mantle;
+$crust: $dark-crust;
+$mauve: $dark-mauve;
+$blue: $dark-blue;
+$peach: $dark-peach;
+$green: $dark-green;
+$teal: $dark-teal;
+$sky: $dark-sky;
+$red: $dark-red;
+
+// additional colors
+$light-overlay: $dark-surface1;
+
+// size variables
+$container-width: 550px;
+$border-radius-lg: 25px;
+$border-radius-md: 15px;
+$border-radius-sm: 12px;
+
+// spacing variables
+$spacing-xs: 5px;
+$spacing-sm: 10px;
+$spacing-md: 15px;
+$spacing-lg: 20px;
+$spacing-xl: 25px;
+$spacing-2xl: 30px;
+$spacing-3xl: 40px;
+
+// transition variables
+$transition-default: all 0.3s ease;
+$transition-fast: all 0.2s ease;
+$transition-color: color 0.3s;
+
+// shadows - using rgba for opacity to work with both themes
+$shadow-small: 0 4px 12px rgba(0, 0, 0, 0.2);
+$shadow-medium: 0 6px 15px rgba(0, 0, 0, 0.25);
+$shadow-card: 0 10px 20px rgba(0, 0, 0, 0.1);
+$shadow-dark: 0 5px 15px rgba(0, 0, 0, 0.2);
