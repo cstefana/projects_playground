@@ -38,6 +38,9 @@ input {
     gap: $spacing-lg;
     margin-top: $spacing-2xl;
     padding: $spacing-sm;
+    align-items: stretch;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .country-card {
@@ -47,7 +50,12 @@ input {
     box-shadow: $shadow-card;
     border: 1px solid #f5e1ff;
     transition: transform 0.3s ease;
-    height: fit-content;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
 
     &:hover {
         transform: translateY(-5px);
@@ -60,6 +68,10 @@ input {
     margin: 0 auto $spacing-xl;
     border-radius: $border-radius-md;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.info-container {
+    flex-grow: 1;
 }
 
 .info-group {
