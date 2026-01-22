@@ -160,7 +160,6 @@ header {
 }
 
 .theme-toggle {
-  /* Remove 'position: absolute' to bring it into the flex flow */
   background: none;
   border: none;
   font-size: 24px;
@@ -262,6 +261,8 @@ input::placeholder {
 
 .flag {
   width: 180px;
+  height: 100px;
+  object-fit: cover;
   display: block;
   margin: 0 auto 25px;
   border-radius: 15px;
@@ -294,8 +295,36 @@ input::placeholder {
   font-weight: 500;
 }
 
+.neighbor-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.map-link-wrapper {
+  margin-top: auto;
+  padding-top: 1rem;
+  text-align: left;
+}
+.map-link-wrapper .map-link {
+  color: var(--accent-pink) !important;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.05rem;
+  transition: all 0.2s ease;
+}
+.map-link-wrapper .map-link:hover {
+  color: var(--sky) !important;
+  text-decoration: underline;
+}
+
 .border-tag {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 50px;
+  padding: 4px 12px;
   background: var(--light-overlay);
   color: var(--teal);
   padding: 2px 10px;
@@ -303,13 +332,18 @@ input::placeholder {
   border-radius: 12px;
   border: 1px solid var(--teal);
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 600;
   transition: all 0.2s ease;
   text-decoration: none;
 }
 .border-tag:hover {
   background: var(--teal-hover);
   color: var(--base);
+}
+.border-tag:hover, .border-tag:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .history-list {

@@ -53,6 +53,18 @@ async function searchCountry(queryParam = null, isCode = false) {
     }
 }
 
+async function getCountryNamesByCodes(codes) {
+    if (!codes || codes.length === 0) return [];
+    try {
+        // Fetch only the names for these specific codes to keep it fast
+        const response = await fetch(`https://restcountries.com/v3.1/alpha?codes=${codes.join(',')}&fields=name`);
+        const data = await response.json();
+        return data.map(c => ({ code: codes.find(code => c.name.common.toUpperCase().includes(code) || true), name: c.name.common }));
+    } catch (e) {
+        return codes.map(code => ({ code, name: code })); // Fallback to code if fetch fails
+    }
+}
+
 // helper function to generate the HTML for one card
 function createCountryCard(country) {
     const currencies = country.currencies ? Object.values(country.currencies).map(c => `${c.name} (${c.symbol})`).join(', ') : 'N/A';
@@ -68,18 +80,23 @@ function createCountryCard(country) {
 
     return `
         <div class="country-card">
-            <img src="${country.flags.svg}" alt="Flag" class="flag">
-            <h2>${country.flag || ''} ${country.name.common} 
-                <span class="star" onclick="toggleStar('${country.name.common}', '${languages.replace(/'/g, "\\'")}')" data-country="${country.name.common}">☆</span>
-            </h2>
+            <div class="info-container">
+                <img src="${country.flags.svg}" alt="Flag" class="flag">
+                <h2>${country.flag || ''} ${country.name.common} 
+                    <span class="star" ... >☆</span>
+                </h2>
+                
+                <div class="info-group"><strong>Official Name:</strong> ${country.name.official}</div>
+                <div class="info-group"><strong>Capital:</strong> ${country.capital ? country.capital[0] : 'N/A'}</div>
+                <div class="info-group"><strong>Population:</strong> ${country.population.toLocaleString()}</div>
+                <div class="info-group"><strong>Languages:</strong> ${languages}</div>
+                <div class="info-group"><strong>Neighbors:</strong><br>
+                    <div class="neighbor-container">${bordersHTML}</div>
+                </div>
+            </div>
             
-            <div class="info-group"><strong>Official Name:</strong> ${country.name.official}</div>
-            <div class="info-group"><strong>Capital:</strong> ${country.capital ? country.capital[0] : 'N/A'}</div>
-            <div class="info-group"><strong>Population:</strong> ${country.population.toLocaleString()}</div>
-            <div class="info-group"><strong>Languages:</strong> ${languages}</div>
-            <div class="info-group"><strong>Neighbors:</strong><br>${bordersHTML}</div>
-            <div class="info-group">
-                <a href="${country.maps.googleMaps}" target="_blank" style="color: var(--accent-pink); text-decoration: none; font-weight: bold;">
+            <div class="map-link-wrapper">
+                <a href="${country.maps.googleMaps}" target="_blank" class="map-link">
                     View country on map
                 </a>
             </div>

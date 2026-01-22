@@ -64,6 +64,8 @@ input {
 
 .flag {
     width: 180px;
+    height: 100px;
+    object-fit: cover;
     display: block;
     margin: 0 auto $spacing-xl;
     border-radius: $border-radius-md;
@@ -98,8 +100,38 @@ input {
 }
 
 // neighbor links
+.neighbor-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.map-link-wrapper {
+    margin-top: auto; 
+    padding-top: 1rem;
+    text-align: left; 
+
+    .map-link {
+        color: var(--accent-pink) !important; 
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.05rem;
+        transition: $transition-fast;
+
+        &:hover {
+            color: var(--sky) !important;
+            text-decoration: underline;
+        }
+    }
+}
+
 .border-tag {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+    padding: 4px 12px;
     background: var(--light-overlay);
     color: var(--teal);
     padding: 2px $spacing-sm;
@@ -107,12 +139,17 @@ input {
     border-radius: $border-radius-sm;
     border: 1px solid var(--teal);
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 600;
     transition: $transition-fast;
     text-decoration: none;
 
     &:hover {
         background: var(--teal-hover);
         color: var(--base);
+    }
+    &:hover, &:focus {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 }

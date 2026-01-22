@@ -13,7 +13,7 @@ html.light-theme {
 
 html, body {
     max-width: 100vw;
-    overflow-x: hidden;    // Force-disables horizontal scrolling
+    overflow-x: hidden;
     margin: 0;
     padding: 0;
 }
@@ -83,20 +83,19 @@ header {
 
 .header-container {
     display: flex;
-    align-items: center;     // Vertically centers toggle & nav
-    justify-content: center; // Horizontally centers the whole group
-    gap: $spacing-md;        // Space between toggle and buttons
+    align-items: center;     
+    justify-content: center;
+    gap: $spacing-md;       
     position: relative;
     width: 100%;
 
     @media (max-width: 600px) {
-        flex-direction: column; // Stacks toggle above buttons on mobile
+        flex-direction: column; // stacks toggle above buttons on mobile
         gap: $spacing-sm;
     }
 }
 
 .theme-toggle {
-    /* Remove 'position: absolute' to bring it into the flex flow */
     background: none;
     border: none;
     font-size: 24px;
