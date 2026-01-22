@@ -69,8 +69,13 @@ async function getCountryNamesByCodes(codes) {
 function createCountryCard(country) {
     const currencies = country.currencies ? Object.values(country.currencies).map(c => `${c.name} (${c.symbol})`).join(', ') : 'N/A';
     const languages = country.languages ? Object.values(country.languages).join(', ') : 'N/A';
-    const timezones = country.timezones ? country.timezones[0] : 'N/A';
+    const commonName = country.name.common;
     
+    // Check if the country is already starred to set the initial icon and color
+    const starredStatus = isStarred(commonName);
+    const starIcon = starredStatus ? '★' : '☆';
+    const starColor = starredStatus ? '#ffd700' : '#ccc';
+
     let bordersHTML = 'None';
     if (country.borders && country.borders.length > 0) {
         bordersHTML = country.borders.map(code => 
@@ -82,8 +87,13 @@ function createCountryCard(country) {
         <div class="country-card">
             <div class="info-container">
                 <img src="${country.flags.svg}" alt="Flag" class="flag">
-                <h2>${country.flag || ''} ${country.name.common} 
-                    <span class="star" ... >☆</span>
+                <h2>${country.flag || ''} ${commonName} 
+                    <span class="star" 
+                          data-country="${commonName}" 
+                          onclick="toggleStar('${commonName}', '${languages.replace(/'/g, "\\'")}')" 
+                          style="color: ${starColor}; cursor: pointer;">
+                        ${starIcon}
+                    </span>
                 </h2>
                 
                 <div class="info-group"><strong>Official Name:</strong> ${country.name.official}</div>
