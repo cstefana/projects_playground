@@ -87,7 +87,7 @@ function createCountryCard(country) {
         <div class="country-card">
             <div class="info-container">
                 <img src="${country.flags.svg}" alt="Flag" class="flag">
-                <h2>${country.flag || ''} ${commonName} 
+                <h2>${commonName} 
                     <span class="star" 
                           data-country="${commonName}" 
                           onclick="toggleStar('${commonName}', '${languages.replace(/'/g, "\\'")}')" 
