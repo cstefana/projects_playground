@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sage Chat</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- desktop layout -->
+    <div id="main-wrapper">
+        <div id="sidebar">
+            <div class="desktop-title">
+                <h1>🌿 Sage Chat</h1>
+            </div>
+            <h3 class="people-header">People</h3>
+            <ul id="user-list">
+                </ul>
+        </div>
+
+    <div id="chat-container">
+        <div id="chat-header">Select a conversation</div>
+        
+        <div id="messages">
+            <div id="no-selection-notice">
+                <p>Please select a user from the sidebar to start chatting.</p>
+            </div>
+        </div>
+
+        <div id="input-area" style="display: none;">
+            <input type="text" id="message-input" placeholder="Type a message...">
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
+    </div>
+    
+    <!-- Mobile Layout -->
+    <div class="mobile-user-selection" id="mobile-user-selection">
+        <div class="mobile-header">
+            <h1>🌿 Sage Chat</h1>
+            <p>Choose someone to chat with</p>
+        </div>
+        <div class="mobile-user-list" id="mobile-user-list">
+            <!-- mobile user list will be populated here -->
+        </div>
+    </div>
+    
+    <div class="mobile-chat-view" id="mobile-chat-view">
+        <div class="mobile-chat-header">
+            <button class="back-button" id="mobile-back-btn">←</button>
+            <div class="mobile-chat-user-info">
+                <img class="mobile-chat-avatar" id="mobile-chat-avatar" src="" alt="">
+                <h2 class="mobile-chat-name" id="mobile-chat-name"></h2>
+            </div>
+        </div>
+        <div id="mobile-messages">
+            <!-- messages will be populated here -->
+        </div>
+        <div class="mobile-input-area" id="mobile-input-area">
+            <input type="text" id="mobile-message-input" placeholder="Type a message...">
+            <button id="mobile-send-btn">Send</button>
+        </div>
+    </div>
+    
+    <script src="scripts/user_class.js"></script>
+    <script src="scripts/csv_utilities.js"></script>
+    <script src="scripts/user_utilities.js"></script>
+    <script src="scripts/mobile_utilities.js"></script>
+</body>
+</html>

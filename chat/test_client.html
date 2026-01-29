@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Backend Test</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        .status { padding: 10px; border-radius: 4px; margin-bottom: 1rem; }
+        .status.connected { background: #d4edda; color: #155724; }
+        .status.disconnected { background: #f8d7da; color: #721c24; }
+        .controls { display: grid; gap: 10px; margin-bottom: 1rem; }
+        #log { background: #f8f9fa; border: 1px solid #dee2e6; padding: 1rem; height: 300px; overflow-y: auto; font-family: monospace; }
+        .log-entry { margin-bottom: 5px; border-bottom: 1px solid #eee; }
+        .log-time { color: #666; font-size: 0.8em; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <h1>🌿 Chat Backend Tester</h1>
+    
+    <div id="connection-status" class="status disconnected">Disconnected</div>
+
+    <div class="controls">
+        <div style="display: flex; gap: 10px;">
+            <input type="text" id="username" placeholder="Username" value="tester">
+            <button onclick="connect()" id="connect-btn">Connect</button>
+            <button onclick="disconnect()" id="disconnect-btn" disabled>Disconnect</button>
+        </div>
+        
+        <div style="display: flex; gap: 10px;">
+            <input type="text" id="message-input" placeholder="Type a message..." style="flex-grow: 1;" disabled>
+            <button onclick="sendMessage()" id="send-btn" disabled>Send</button>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+             <button onclick="getHistory()" id="history-btn" disabled>Get History</button>
+             <button onclick="testTyping()" id="typing-btn" disabled>Simulate Typing</button>
+        </div>
+    </div>
+
+    <div id="log"></div>
+
+    <script>
+        let ws = null;
+
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            const time = new Date().toLocaleTimeString();
+            entry.innerHTML = `<span class="log-time">[${time}]</span> ${message}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function connect() {
+            const username = document.getElementById('username').value;
+            if (!username) return alert('Please enter a username');
+
+            log(`Connecting as ${username}...`);
+            
+            // Connect to localhost:8000
+            ws = new WebSocket(`ws://localhost:8000/chat/ws?username=${username}`);
+
+            ws.onopen = () => {
+                log('✅ Connected!', 'success');
+                document.getElementById('connection-status').textContent = 'Connected';
+                document.getElementById('connection-status').className = 'status connected';
+                document.getElementById('connect-btn').disabled = true;
+                document.getElementById('disconnect-btn').disabled = false;
+                document.getElementById('message-input').disabled = false;
+                document.getElementById('send-btn').disabled = false;
+                document.getElementById('history-btn').disabled = false;
+                document.getElementById('typing-btn').disabled = false;
+            };
+
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                log(`📨 Received: ${JSON.stringify(data, null, 2)}`);
+            };
+
+            ws.onclose = (event) => {
+                log(`❌ Disconnected (Code: ${event.code})`, 'error');
+                resetUI();
+            };
+
+            ws.onerror = (error) => {
+                log(`🚨 Error: ${error.message || 'Unknown error'}`, 'error');
+            };
+        }
+
+        function disconnect() {
+            if (ws) ws.close();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('message-input');
+            const content = input.value;
+            if (!content) return;
+
+            const msg = {
+                action: "send_message",
+                data: { content: content }
+            };
+            
+            ws.send(JSON.stringify(msg));
+            log(`📤 Sent: ${content}`);
+            input.value = '';
+        }
+
+        function getHistory() {
+            const msg = {
+                action: "get_history",
+                data: { with_user: "broadcast", limit: 10 }
+            };
+            ws.send(JSON.stringify(msg));
+            log('📤 Requesting history...');
+        }
+
+        function testTyping() {
+            const msg = {
+                action: "typing",
+                data: { typing: true }
+            };
+            ws.send(JSON.stringify(msg));
+            log('📤 Sending typing indicator...');
+            
+            setTimeout(() => {
+                ws.send(JSON.stringify({
+                    action: "typing",
+                    data: { typing: false }
+                }));
+                log('📤 Sending stop typing...');
+            }, 2000);
+        }
+
+        function resetUI() {
+            document.getElementById('connection-status').textContent = 'Disconnected';
+            document.getElementById('connection-status').className = 'status disconnected';
+            document.getElementById('connect-btn').disabled = false;
+            document.getElementById('disconnect-btn').disabled = true;
+            document.getElementById('message-input').disabled = true;
+            document.getElementById('send-btn').disabled = true;
+            document.getElementById('history-btn').disabled = true;
+            document.getElementById('typing-btn').disabled = true;
+            ws = null;
+        }
+    </script>
+</body>
+</html>
