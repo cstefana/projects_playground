@@ -1,5 +1,6 @@
 let chatData = {}; 
 let activeUser = null;
+let currentUsername = null;
 
 const userListEl = document.getElementById('user-list');
 const messagesContainer = document.getElementById('messages');
@@ -13,6 +14,9 @@ function renderUserList() {
     userListEl.innerHTML = ''; 
     
     Object.keys(chatData).forEach(name => {
+        // don't show the current user in the user list
+        if (name === currentUsername) return;
+        
         const user = chatData[name];
         const li = document.createElement('li');
         li.classList.add('user-item');
@@ -25,12 +29,23 @@ function renderUserList() {
             this.src = user.generateFallbackAvatar();
         };
         
+        const userInfo = document.createElement('div');
+        userInfo.classList.add('user-info');
+        
         const nameSpan = document.createElement('span');
         nameSpan.classList.add('user-name');
         nameSpan.textContent = name;
         
+        const statusSpan = document.createElement('span');
+        statusSpan.classList.add('user-status');
+        statusSpan.textContent = user.status || 'offline';
+        statusSpan.classList.add(user.status === 'online' ? 'online' : 'offline');
+        
+        userInfo.appendChild(nameSpan);
+        userInfo.appendChild(statusSpan);
+        
         li.appendChild(avatar);
-        li.appendChild(nameSpan);
+        li.appendChild(userInfo);
         li.onclick = () => selectUser(name, li);
         userListEl.appendChild(li);
     });
@@ -44,6 +59,12 @@ function selectUser(name, element) {
     
     chatHeader.textContent = `Chatting with ${name}`;
     inputArea.style.display = 'flex';
+    
+    // request chat history from server
+    if (typeof requestChatHistory === 'function') {
+        requestChatHistory(name);
+    }
+    
     renderMessages();
 }
 
@@ -76,17 +97,17 @@ function renderMessages() {
                 wrapper.appendChild(avatar);
             }
             
-            // Create message with timestamp container
+            // create message with timestamp container
             const messageWithTimestamp = document.createElement('div');
             messageWithTimestamp.classList.add('message-with-timestamp', msg.type === 'sent' ? 'sent' : 'received');
             
-            // Create message bubble
+            // create message bubble
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('message', msg.type === 'sent' ? 'sent' : 'received');
             messageDiv.textContent = msg.text;
             messageWithTimestamp.appendChild(messageDiv);
             
-            // Add timestamp below bubble
+            // add timestamp below bubble
             const timestampDiv = document.createElement('div');
             timestampDiv.classList.add('message-timestamp');
             timestampDiv.textContent = msg.getFullTimestamp();
@@ -109,10 +130,9 @@ function sendMessage() {
     }
 
     if (text !== "") {
-        const user = chatData[activeUser];
-        user.addMessage(text, 'sent');
+        // send message through WebSocket
+        sendWebSocketMessage(activeUser, text);
         messageInput.value = "";
-        renderMessages();
     }
 }
 
@@ -123,5 +143,3 @@ messageInput.addEventListener('keydown', (event) => {
         sendMessage();
     }
 });
-
-loadDataFromFile();

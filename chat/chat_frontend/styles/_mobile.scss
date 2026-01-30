@@ -76,6 +76,38 @@
                     transform: translateY(0);
                 }
                 
+                .mobile-user-avatar-wrapper {
+                    position: relative;
+                    flex-shrink: 0;
+                    
+                    .mobile-user-avatar {
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        border: 3px solid $sage-soft;
+                        display: block;
+                    }
+                    
+                    .mobile-status-indicator {
+                        position: absolute;
+                        bottom: 0;
+                        right: 0;
+                        width: 14px;
+                        height: 14px;
+                        border-radius: 50%;
+                        border: 2px solid white;
+                        
+                        &.online {
+                            background-color: #00ff00;
+                        }
+                        
+                        &.offline {
+                            background-color: #999;
+                        }
+                    }
+                }
+                
                 .mobile-user-avatar {
                     width: 50px;
                     height: 50px;
@@ -178,15 +210,19 @@
         #mobile-messages {
             flex: 1;
             padding: $spacing-lg;
+            overflow-y: auto;
+            margin-bottom: 0;
         }
         
         .mobile-input-area {
             padding: $spacing-lg $spacing-xxl;
+            padding-bottom: calc($spacing-xxl + env(safe-area-inset-bottom));
             border-top: 1px solid $sage-soft;
             background: white;
             display: flex;
             gap: 10px;
             align-items: center;
+            flex-shrink: 0;
             
             #mobile-message-input {
                 flex: 1;

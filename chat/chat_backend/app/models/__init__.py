@@ -49,7 +49,7 @@ class ChatRoom(BaseModel):
 
 
 class WebSocketMessage(BaseModel):
-    action: str  # "send_message", "join_room", "leave_room", "typing", etc.
+    action: str  # for example, "send_message"
     data: dict
     username: Optional[str] = None
     room_id: Optional[str] = None

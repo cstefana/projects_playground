@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Sage Chat Backend Startup Script
-
 echo "🌿 Starting Sage Chat Backend..."
 
 # Check if Python is installed
@@ -38,13 +36,13 @@ if [ $? -eq 0 ]; then
     echo "Redis is running"
 else
     echo "Redis is not running. Starting Redis..."
-    # Try to start Redis (works on macOS with Homebrew)
+    # Try to start Redis
     if command -v brew &> /dev/null; then
         brew services start redis
         sleep 2
     else
         echo "Please start Redis manually: redis-server"
-        echo "   The backend will still work but without message persistence."
+        echo "The backend will still work but without message persistence."
     fi
 fi
 

@@ -50,7 +50,7 @@ class ConnectionManager:
             "users": online_users
         }, connection_id)
         
-        # notify other users about new user
+        # the new user joined the chat
         await self.broadcast_user_status(username, "joined")
         
         return connection_id
@@ -172,6 +172,7 @@ class ConnectionManager:
             if to_username:
                 await self.send_message_to_user(message_data, to_username)
                 # also send back to sender for confirmation
+                # without sensing the message back to the sender, it would not appear in their chat window
                 await self.send_message_to_user(message_data, from_username)
             else:
                 # broadcast to all users

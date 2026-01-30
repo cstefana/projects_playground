@@ -2,10 +2,11 @@
  * User class to encapsulate user data and methods
  */
 class User {
-    constructor(name, profilePic = null) {
+    constructor(name, profilePic = null, status = 'offline') {
         this.name = name;
         this.messages = [];
         this.profilePic = profilePic || this.generateFallbackAvatar();
+        this.status = status;
     }
 
     /**

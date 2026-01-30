@@ -1,3 +1,4 @@
+// LEGACY AND RETIRED >:D
 const CSV_FILE_URL = 'users.csv'; 
 
 // load data from specified CSV file

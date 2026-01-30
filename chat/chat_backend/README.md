@@ -108,18 +108,6 @@ A real-time chat backend built with FastAPI, WebSockets, and Redis pub-sub archi
 }
 ```
 
-## Architecture
-
-The backend follows a modern, scalable architecture:
-
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Frontend      │◄──►│   FastAPI       │◄──►│     Redis       │
-│   (WebSocket)   │    │   (WebSocket    │    │   (Pub-Sub &    │
-│                 │    │    Server)      │    │   Persistence)  │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-```
-
 ### Core Components
 
 1. **FastAPI Server** (`main.py`)

@@ -7,8 +7,28 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- Login Overlay -->
+    <div id="login-overlay">
+        <div class="login-box">
+            <h2>🌿 Welcome to the Sage Side</h2>
+            <input type="text" id="username-input" placeholder="Enter your username" />
+            
+            <div class="avatar-selection">
+                <p style="margin: 10px 0 5px 0; font-size: 0.9em; color: #555;">Choose your avatar:</p>
+                <div class="avatar-grid">
+                    <img src="images/plants1.avif" class="avatar-option" data-avatar="images/plants1.avif" alt="Plant 1">
+                    <img src="images/plants2.avif" class="avatar-option" data-avatar="images/plants2.avif" alt="Plant 2">
+                    <img src="images/plants3.avif" class="avatar-option" data-avatar="images/plants3.avif" alt="Plant 3">
+                </div>
+                <input type="text" id="custom-avatar-input" placeholder="Or paste image URL" />
+            </div>
+            
+            <button id="login-btn">Join Chat</button>
+        </div>
+    </div>
+
     <!-- desktop layout -->
-    <div id="main-wrapper">
+    <div id="main-wrapper" style="display: none;">
         <div id="sidebar">
             <div class="desktop-title">
                 <h1>🌿 Sage Chat</h1>
@@ -63,7 +83,7 @@
     </div>
     
     <script src="scripts/user_class.js"></script>
-    <script src="scripts/csv_utilities.js"></script>
+    <script src="scripts/websocket_client.js"></script>
     <script src="scripts/user_utilities.js"></script>
     <script src="scripts/mobile_utilities.js"></script>
 </body>

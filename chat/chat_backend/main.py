@@ -10,7 +10,7 @@ from app.websocket.routes import router as websocket_router
 from app.services.pubsub import pubsub_service
 from app.services.user_manager import user_manager
 
-# Configure logging
+# configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -64,7 +64,7 @@ app = FastAPI(
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify exact origins
+    allow_origins=["*"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -112,9 +112,16 @@ async def health_check():
 
 @app.get("/users")
 async def get_users():
-    """Get list of online users"""
+    """Get list of all users from Redis"""
     try:
-        users = user_manager.get_users_for_user_list()
+        # Get all users from Redis (persisted data)
+        users = await pubsub_service.get_all_users()
+        
+        # Update status for currently connected users
+        for user in users:
+            if user_manager.is_user_online(user["username"]):
+                user["status"] = UserStatus.ONLINE.value
+        
         return {"users": users}
     except Exception as e:
         logger.error(f"Error getting users: {e}")
@@ -139,14 +146,28 @@ async def create_user(user_request: CreateUserRequest):
         # Check if user already exists
         existing_user = user_manager.get_user(username)
         if existing_user:
-            raise HTTPException(status_code=409, detail="Username already exists")
+            # Update profile pic if provided
+            if user_request.profile_pic:
+                existing_user.profile_pic = user_request.profile_pic
+                # Update in Redis too
+                await pubsub_service.set_user_online(username, user_request.profile_pic)
+            
+            return {
+                "message": "User already exists",
+                "user": {
+                    "username": existing_user.username,
+                    "profile_pic": existing_user.profile_pic,
+                    "status": existing_user.status,
+                    "last_seen": existing_user.last_seen.isoformat()
+                }
+            }
         
-        # Create user with offline status (they're not connected yet)
-        # We'll add them with a dummy connection ID that will be replaced when they actually connect
+        # create user with offline status (they're not connected yet)
+        # adding with a dummy connection id
         dummy_connection_id = f"offline_{username}"
         user = await user_manager.add_user(username, dummy_connection_id, user_request.profile_pic)
         
-        # Set user as offline since this is just registration
+        # set user as offline since this is just registration
         await user_manager.remove_user_connection(username, dummy_connection_id)
         
         return {
@@ -197,7 +218,7 @@ async def update_user(username: str, user_request: CreateUserRequest):
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
         
-        # Update profile picture if provided
+        # update profile picture if provided
         if user_request.profile_pic:
             user.profile_pic = user_request.profile_pic
         
@@ -225,12 +246,12 @@ async def delete_user(username: str):
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
         
-        # Force disconnect all connections for this user
+        # force disconnect all connections for this user
         connections = user_manager.get_user_connections(username)
         for connection_id in connections.copy():
             await user_manager.remove_user_connection(username, connection_id)
         
-        # Remove user from connected users
+        # remove user from connected users
         if username in user_manager.connected_users:
             del user_manager.connected_users[username]
         
