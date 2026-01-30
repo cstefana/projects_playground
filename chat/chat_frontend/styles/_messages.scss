@@ -1,0 +1,102 @@
+@use 'variables' as *;
+#messages {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: $spacing-xxl;
+    scroll-behavior: smooth;
+    
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        background: rgba(196, 208, 193, 0.1);
+        border-radius: $radius-sm;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background: rgba(122, 148, 117, 0.3);
+        border-radius: $radius-sm;
+        
+        &:hover {
+            background: rgba(122, 148, 117, 0.5);
+        }
+    }
+}
+
+.message-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+    width: 100%;
+    
+    &.sent {
+        flex-direction: row-reverse;
+    }
+}
+
+.message {
+    padding: 10px 14px;
+    border-radius: $radius-xl;
+    max-width: 100%;
+    word-wrap: break-word;
+    background: linear-gradient(145deg, $sage-medium, #c8d6c5);
+    align-self: flex-start;
+    box-shadow: $shadow-light;
+    font-size: $font-size-base;
+    line-height: 1.4;
+    animation: messageSlideIn $transition-normal ease-out;
+    position: relative;
+    width: fit-content;
+    
+    &.sent {
+        margin-left: 0;
+        margin-right: 0;
+        background: linear-gradient(145deg, $sage-primary, $sage-secondary);
+        color: white;
+        align-self: flex-end;
+    }
+}
+
+.message-with-timestamp {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 100%;
+    
+    &.sent {
+        align-items: flex-end;
+    }
+}
+
+.message-timestamp {
+    font-size: 11px;
+    color: #999;
+    margin-top: $spacing-xs;
+    font-weight: 400;
+    
+    .message-wrapper.sent & {
+        align-self: flex-end;
+    }
+    
+    .message-wrapper:not(.sent) & {
+        align-self: flex-start;
+        margin-left: $spacing-sm;
+    }
+}
+
+.message-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.message-content {
+    flex: 1;
+}

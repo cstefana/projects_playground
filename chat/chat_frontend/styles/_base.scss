@@ -1,0 +1,18 @@
+@use 'variables' as *;
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: $font-family;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    background: linear-gradient(135deg, $sage-light 0%, $sage-medium 100%);
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}

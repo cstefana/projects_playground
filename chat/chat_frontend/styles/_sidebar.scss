@@ -1,0 +1,77 @@
+@use 'variables' as *;
+
+#sidebar {
+    width: 280px;
+    background: rgba(225, 238, 221, 0.9);
+    backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(196, 208, 193, 0.3);
+    padding: $spacing-xxl;
+    overflow-y: auto;
+}
+
+.desktop-title {
+    text-align: center;
+    padding-bottom: $spacing-xl;
+    border-bottom: 2px solid rgba(122, 148, 117, 0.2);
+    margin-bottom: $spacing-xl;
+    
+    h1 {
+        font-family: 'Momo Signature', cursive;
+        font-size: 28px;
+        font-weight: 400;
+        letter-spacing: 1px;
+        color: $sage-primary;
+        margin: 0;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+}
+
+.people-header {
+    margin: 0 0 $spacing-lg 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2d3e2a;
+}
+
+#user-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user-item {
+    padding: $spacing-lg;
+    cursor: pointer;
+    border-radius: $radius-md;
+    margin-bottom: $spacing-md;
+    transition: all $transition-normal $transition-ease;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+    
+    &.active {
+        background: linear-gradient(145deg, $sage-primary, $sage-secondary);
+        color: white;
+        transform: scale(1.02);
+        box-shadow: $shadow-large;
+        
+        .user-avatar {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+    }
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(122, 148, 117, 0.2);
+    flex-shrink: 0;
+}
+
+.user-name {
+    flex: 1;
+    font-size: $font-size-base;
+}

@@ -1,0 +1,43 @@
+// sage chat theme variables
+$sage-primary: #7a9475;
+$sage-secondary: #6d8568;
+$sage-light: #e8f0e5;
+$sage-medium: #d4e0d1;
+$sage-soft: #c4d0c1;
+$sage-background: #f5f8f4;
+$sage-input: #e1eedd;
+$sage-input-bg: #f9faf8;
+
+
+$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+$font-size-base: 14px;
+$font-size-header: 16px;
+
+// spacing
+$spacing-xs: 2px;
+$spacing-sm: 4px;
+$spacing-md: 8px;
+$spacing-lg: 12px;
+$spacing-xl: 16px;
+$spacing-xxl: 20px;
+
+// radius
+$radius-sm: 3px;
+$radius-md: 12px;
+$radius-lg: 16px;
+$radius-xl: 18px;
+$radius-xxl: 20px;
+$radius-input: 22px;
+
+// shadows
+$shadow-light: 0 2px 8px rgba(0,0,0,0.08);
+$shadow-medium: 0 4px 12px rgba(122, 148, 117, 0.3);
+$shadow-large: 0 6px 16px rgba(122, 148, 117, 0.4);
+$shadow-container: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08);
+$shadow-main: 0 20px 60px rgba(0,0,0,0.15);
+
+// transitions
+$transition-fast: 0.2s;
+$transition-normal: 0.3s;
+$transition-slow: 0.5s;
+$transition-ease: cubic-bezier(0.4, 0, 0.2, 1);

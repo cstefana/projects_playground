@@ -1,0 +1,49 @@
+@use 'variables' as *;
+
+#main-wrapper {
+    display: flex;
+    width: 90%;
+    max-width: 1000px;
+    height: 80vh;
+    min-height: 600px;
+    border-radius: $radius-xxl;
+    overflow: hidden;
+    box-shadow: $shadow-main;
+    backdrop-filter: blur(20px);
+    background: rgba(255,255,255,0.1);
+}
+
+#chat-container {
+    background: $sage-background;
+    border-radius: $radius-lg;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: $shadow-container;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(196, 208, 193, 0.3);
+    flex: 1;
+    height: 100%;
+}
+
+#chat-header {
+    padding: $spacing-xxl;
+    background: rgba(245, 248, 244, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(196, 208, 193, 0.3);
+    font-weight: 600;
+    font-size: $font-size-header;
+    color: #2d3e2a;
+    text-align: center;
+}
+
+#no-selection-notice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #888;
+    text-align: center;
+    font-style: italic;
+    padding: $spacing-xxl;
+}
