@@ -68,6 +68,14 @@ function selectUser(name, element) {
     renderMessages();
 }
 
+// helper function to check if message contains only emojis
+function isEmojiOnly(text) {
+    // remove all emoji characters and whitespace to see if anything is left
+    const emojiRegex = /[\p{Emoji}\p{Emoji_Presentation}\p{Emoji_Modifier}\p{Emoji_Component}\s]/gu;
+    const textWithoutEmojis = text.replace(emojiRegex, '');
+    return textWithoutEmojis.length === 0 && text.trim().length > 0;
+}
+
 function renderMessages() {
     messagesContainer.innerHTML = ''; 
     
@@ -104,6 +112,12 @@ function renderMessages() {
             // create message bubble
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('message', msg.type === 'sent' ? 'sent' : 'received');
+            
+            // Check if message is emoji-only
+            if (isEmojiOnly(msg.text)) {
+                messageDiv.classList.add('emoji-only');
+            }
+            
             messageDiv.textContent = msg.text;
             messageWithTimestamp.appendChild(messageDiv);
             

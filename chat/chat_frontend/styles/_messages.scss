@@ -59,6 +59,19 @@
         color: white;
         align-self: flex-end;
     }
+    
+    // emoji-only messages - no bubble
+    &.emoji-only {
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+        font-size: 48px;
+        line-height: 1;
+        
+        &.sent {
+            background: transparent;
+        }
+    }
 }
 
 .message-with-timestamp {

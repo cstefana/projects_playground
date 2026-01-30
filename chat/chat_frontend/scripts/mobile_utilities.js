@@ -116,6 +116,12 @@ function renderMobileMessages() {
         // Create message bubble
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message', msg.type === 'sent' ? 'sent' : 'received');
+        
+        // Check if message is emoji-only (use function from user_utilities.js)
+        if (typeof isEmojiOnly === 'function' && isEmojiOnly(msg.text)) {
+            messageDiv.classList.add('emoji-only');
+        }
+        
         messageDiv.textContent = msg.text;
         messageWithTimestamp.appendChild(messageDiv);
         
