@@ -8,7 +8,6 @@ A real-time chat backend built with FastAPI, WebSockets, and Redis pub-sub archi
 - **Pub-sub architecture** using Redis for scalability
 - **User management** with online/offline status tracking
 - **Message persistence** with conversation history
-- **Typing indicators** for enhanced user experience
 - **CORS support** for cross-origin requests
 - **Health monitoring** with status endpoints
 
@@ -219,15 +218,3 @@ ws.send(JSON.stringify({
     }
 }));
 ```
-
-## Next Steps
-
-To connect this backend with your existing frontend:
-
-1. **Update the JavaScript frontend** to use WebSocket connections
-2. **Replace CSV data loading** with real-time user management
-3. **Implement message sending/receiving** through WebSocket
-4. **Add user authentication** (optional)
-5. **Style the real-time features** (typing indicators, online status)
-
-The backend is ready to handle real-time chat functionality!

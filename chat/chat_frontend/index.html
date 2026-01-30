@@ -49,7 +49,13 @@
 
         <div id="input-area" style="display: none;">
             <input type="text" id="message-input" placeholder="Type a message...">
+            <button id="emoji-btn" class="emoji-btn" title="Add emoji">😊</button>
             <button id="send-btn">Send</button>
+        </div>
+        
+        <!-- Emoji Picker Popup -->
+        <div id="emoji-picker-container" class="emoji-picker-container" style="display: none;">
+            <emoji-picker id="emoji-picker"></emoji-picker>
         </div>
     </div>
     </div>
@@ -78,7 +84,13 @@
         </div>
         <div class="mobile-input-area" id="mobile-input-area">
             <input type="text" id="mobile-message-input" placeholder="Type a message...">
+            <button id="mobile-emoji-btn" class="emoji-btn" title="Add emoji">😊</button>
             <button id="mobile-send-btn">Send</button>
+        </div>
+        
+        <!-- Mobile Emoji Picker Popup -->
+        <div id="mobile-emoji-picker-container" class="emoji-picker-container" style="display: none;">
+            <emoji-picker id="mobile-emoji-picker"></emoji-picker>
         </div>
     </div>
     
@@ -86,5 +98,7 @@
     <script src="scripts/websocket_client.js"></script>
     <script src="scripts/user_utilities.js"></script>
     <script src="scripts/mobile_utilities.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+    <script src="scripts/emoji_picker.js"></script>
 </body>
 </html>

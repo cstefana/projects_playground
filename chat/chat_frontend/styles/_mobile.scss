@@ -220,7 +220,7 @@
             border-top: 1px solid $sage-soft;
             background: white;
             display: flex;
-            gap: 10px;
+            gap: $spacing-md;
             align-items: center;
             flex-shrink: 0;
             
@@ -255,6 +255,24 @@
                 }
             }
         }
+    }
+    
+    // Mobile emoji picker adjustments
+    .emoji-picker-container {
+        position: fixed;
+        bottom: 70px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 40px);
+        max-width: 360px;
+        right: auto;
+    }
+    
+    emoji-picker {
+        --num-columns: 7;
+        width: 100%;
+        max-width: 360px;
+        height: 380px;
     }
     
     // hide desktop elements on mobile
