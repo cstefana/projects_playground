@@ -17,6 +17,10 @@ class UserManager:
         try:
             # Create or get existing user
             if username not in self.connected_users:
+                # Try to get profile pic from Redis if not provided
+                if not profile_pic:
+                    profile_pic = await pubsub_service.get_user_profile_pic(username)
+                
                 user = User(
                     username=username,
                     profile_pic=profile_pic,
@@ -32,6 +36,9 @@ class UserManager:
                 user.last_seen = datetime.now()
                 if profile_pic:
                     user.profile_pic = profile_pic
+                elif not user.profile_pic:
+                    # Try to get from Redis if user doesn't have one
+                    user.profile_pic = await pubsub_service.get_user_profile_pic(username)
                 logger.info(f"Existing user updated: {username}")
             
             # Track connection
@@ -39,8 +46,8 @@ class UserManager:
                 self.user_connections[username] = set()
             self.user_connections[username].add(connection_id)
             
-            # Set user online in Redis
-            await pubsub_service.set_user_online(username)
+            # Set user online in Redis (with profile pic)
+            await pubsub_service.set_user_online(username, user.profile_pic)
             
             return user
             
@@ -105,7 +112,7 @@ class UserManager:
             logger.error(f"Failed to set typing status for {username}: {e}")
 
     def get_users_for_user_list(self) -> list:
-        """Get formatted user list for frontend"""
+        """Get formatted user list for frontend (all users with their status)"""
         users = []
         for username, user in self.connected_users.items():
             users.append({

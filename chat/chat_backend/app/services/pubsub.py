@@ -91,12 +91,16 @@ class PubSubService:
             raise
 
     # user management methods
-    async def set_user_online(self, username: str):
+    async def set_user_online(self, username: str, profile_pic: str = None):
         """Set user status to online"""
         try:
             user_key = f"user:{username}"
             await self.redis_client.hset(user_key, "status", UserStatus.ONLINE.value)
             await self.redis_client.hset(user_key, "last_seen", str(datetime.now()))
+            
+            # Store profile pic if provided
+            if profile_pic:
+                await self.redis_client.hset(user_key, "profile_pic", profile_pic)
             
             # Add to online users set
             await self.redis_client.sadd("online_users", username)
@@ -137,6 +141,41 @@ class PubSubService:
         except Exception as e:
             logger.error(f"Failed to get online users: {e}")
             return set()
+
+    async def get_user_profile_pic(self, username: str) -> str:
+        """Get user's profile picture from Redis"""
+        try:
+            user_key = f"user:{username}"
+            profile_pic = await self.redis_client.hget(user_key, "profile_pic")
+            return profile_pic
+        except Exception as e:
+            logger.error(f"Failed to get user profile pic: {e}")
+            return None
+
+    async def get_all_users(self) -> list:
+        """Get all users from Redis (both online and offline)"""
+        try:
+            # Get all user keys
+            user_keys = []
+            async for key in self.redis_client.scan_iter(match="user:*"):
+                user_keys.append(key)
+            
+            users = []
+            for user_key in user_keys:
+                username = user_key.split(":", 1)[1]
+                user_data = await self.redis_client.hgetall(user_key)
+                if user_data:
+                    users.append({
+                        "username": username,
+                        "profile_pic": user_data.get("profile_pic"),
+                        "status": user_data.get("status", UserStatus.OFFLINE.value),
+                        "last_seen": user_data.get("last_seen", str(datetime.now()))
+                    })
+            
+            return users
+        except Exception as e:
+            logger.error(f"Failed to get all users: {e}")
+            return []
 
     async def store_message(self, message: Message):
         """Store a message in Redis"""

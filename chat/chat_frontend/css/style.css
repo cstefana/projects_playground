@@ -111,30 +111,55 @@ body {
   font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+}
+.user-item .user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid rgba(122, 148, 117, 0.2);
+}
+.user-item .user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.user-item .user-name {
+  font-weight: 600;
+  color: #2d3e2a;
+  font-size: 14px;
+}
+.user-item .user-status {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+.user-item .user-status.online {
+  color: #7a9475;
+}
+.user-item .user-status.offline {
+  color: #999;
+}
+.user-item:hover {
+  background: rgba(196, 208, 193, 0.3);
+  transform: translateY(-2px);
 }
 .user-item.active {
   background: linear-gradient(145deg, #7a9475, #6d8568);
-  color: white;
   transform: scale(1.02);
   box-shadow: 0 6px 16px rgba(122, 148, 117, 0.4);
 }
+.user-item.active .user-name {
+  color: white;
+}
+.user-item.active .user-status {
+  color: rgba(255, 255, 255, 0.9);
+}
 .user-item.active .user-avatar {
   border-color: rgba(255, 255, 255, 0.3);
-}
-
-.user-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid rgba(122, 148, 117, 0.2);
-  flex-shrink: 0;
-}
-
-.user-name {
-  flex: 1;
-  font-size: 14px;
 }
 
 #messages {
@@ -350,6 +375,33 @@ body {
   .mobile-user-selection .mobile-user-list .mobile-user-item:active {
     transform: translateY(0);
   }
+  .mobile-user-selection .mobile-user-list .mobile-user-item .mobile-user-avatar-wrapper {
+    position: relative;
+    flex-shrink: 0;
+  }
+  .mobile-user-selection .mobile-user-list .mobile-user-item .mobile-user-avatar-wrapper .mobile-user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #c4d0c1;
+    display: block;
+  }
+  .mobile-user-selection .mobile-user-list .mobile-user-item .mobile-user-avatar-wrapper .mobile-status-indicator {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid white;
+  }
+  .mobile-user-selection .mobile-user-list .mobile-user-item .mobile-user-avatar-wrapper .mobile-status-indicator.online {
+    background-color: #00ff00;
+  }
+  .mobile-user-selection .mobile-user-list .mobile-user-item .mobile-user-avatar-wrapper .mobile-status-indicator.offline {
+    background-color: #999;
+  }
   .mobile-user-selection .mobile-user-list .mobile-user-item .mobile-user-avatar {
     width: 50px;
     height: 50px;
@@ -437,14 +489,18 @@ body {
   .mobile-chat-view #mobile-messages {
     flex: 1;
     padding: 12px;
+    overflow-y: auto;
+    margin-bottom: 0;
   }
   .mobile-chat-view .mobile-input-area {
     padding: 12px 20px;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
     border-top: 1px solid #c4d0c1;
     background: white;
     display: flex;
     gap: 10px;
     align-items: center;
+    flex-shrink: 0;
   }
   .mobile-chat-view .mobile-input-area #mobile-message-input {
     flex: 1;
@@ -485,6 +541,96 @@ body {
   .mobile-chat-view {
     display: none !important;
   }
+}
+#login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.login-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 350px;
+  max-width: 90vw;
+}
+.login-box h2 {
+  margin-top: 0;
+  color: #333;
+}
+.login-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+.login-box input:focus {
+  outline: none;
+  border-color: #7a9475;
+}
+.login-box button {
+  width: 100%;
+  padding: 10px;
+  background: #7a9475;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 10px;
+  transition: background 0.3s ease;
+}
+.login-box button:hover {
+  background: rgb(97.8285714286, 120.5387755102, 93.4612244898);
+}
+.login-box button:active {
+  transform: scale(0.98);
+}
+
+.avatar-selection {
+  margin: 15px 0;
+}
+.avatar-selection p {
+  margin: 10px 0 5px 0;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.avatar-grid {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.avatar-option {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: all 0.3s ease;
+  object-fit: cover;
+}
+.avatar-option:hover {
+  transform: scale(1.1);
+  border-color: #7a9475;
+}
+.avatar-option.selected {
+  border-color: #7a9475;
+  box-shadow: 0 0 0 2px rgba(107, 140, 102, 0.2);
 }
 
 /*# sourceMappingURL=style.css.map */

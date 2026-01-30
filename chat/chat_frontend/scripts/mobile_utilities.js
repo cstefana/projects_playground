@@ -37,6 +37,12 @@ function showMobileChatView(userName) {
     };
     
     currentMobileUser = userName;
+    
+    // Request chat history from server
+    if (typeof requestChatHistory === 'function') {
+        requestChatHistory(userName);
+    }
+    
     renderMobileMessages();
 }
 
@@ -48,6 +54,8 @@ function populateMobileUserList() {
     Object.keys(chatData).forEach(userName => {
         const user = chatData[userName];
         const lastMessage = user.getLastMessage();
+        const userStatus = user.status || 'offline';
+        const statusClass = userStatus === 'online' ? 'online' : 'offline';
         
         const userItem = document.createElement('div');
         userItem.classList.add('mobile-user-item');
@@ -56,8 +64,11 @@ function populateMobileUserList() {
         const messageTime = lastMessage ? lastMessage.getFormattedTime() : '';
         
         userItem.innerHTML = `
-            <img class="mobile-user-avatar" src="${user.getProfilePic()}" alt="${userName}" 
-                 onerror="this.src='${user.generateFallbackAvatar()}'">
+            <div class="mobile-user-avatar-wrapper">
+                <img class="mobile-user-avatar" src="${user.getProfilePic()}" alt="${userName}" 
+                     onerror="this.src='${user.generateFallbackAvatar()}'">
+                <span class="mobile-status-indicator ${statusClass}"></span>
+            </div>
             <div class="mobile-user-info">
                 <div class="mobile-user-name">${userName}</div>
                 <div class="mobile-user-preview">${previewText}</div>
@@ -132,10 +143,9 @@ function sendMobileMessage() {
     }
     
     if (text !== "") {
-        const user = chatData[currentMobileUser];
-        user.addMessage(text, 'sent');
+        // Send message through WebSocket
+        sendWebSocketMessage(currentMobileUser, text);
         input.value = "";
-        renderMobileMessages();
     }
 }
 
@@ -166,22 +176,33 @@ window.addEventListener('resize', () => {
     // if switching between mobile and desktop, re-initialize
     if (wasMobile !== isMobile) {
         if (isMobile) {
+            // switching to mobile - repopulate user list with current data
             initMobile();
         } else {
-            // Reset to desktop view
+            // reset to desktop view
             document.getElementById('mobile-user-selection').style.display = 'none';
             document.getElementById('mobile-chat-view').classList.remove('active');
         }
+    } else if (isMobile) {
+        // still on mobile, just refresh the list in case data changed
+        populateMobileUserList();
     }
 });
 
-// override the original loadDataFromFile callback for mobile
-const originalLoadDataFromFile = loadDataFromFile;
-loadDataFromFile = async function() {
-    await originalLoadDataFromFile();
-    
-    // initialize mobile if on mobile device
+// initialize mobile if on mobile device after connection
+window.addEventListener('load', () => {
     if (checkMobileDevice()) {
-        initMobile();
+        // wait a bit for WebSocket connection and initial data
+        setTimeout(initMobile, 500);
     }
-};
+});
+
+// refresh mobile view 
+function refreshMobileView() {
+    if (checkMobileDevice()) {
+        populateMobileUserList();
+        if (currentMobileUser && document.getElementById('mobile-chat-view').classList.contains('active')) {
+            renderMobileMessages();
+        }
+    }
+}
