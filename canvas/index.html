@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypeScript Canvas Shapes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Window State Display -->
+    <div id="windowState" class="window-state">
+        <div class="window-state-header">Window State</div>
+        <div class="window-state-content">
+            <div class="state-item">
+                <span class="state-label">Inner Size:</span>
+                <span id="innerSize" class="state-value">0×0</span>
+            </div>
+            <div class="state-item">
+                <span class="state-label">Mouse:</span>
+                <span id="mousePos" class="state-value">0, 0</span>
+            </div>
+            <div class="state-item">
+                <span class="state-label">Canvas set size:</span>
+                <span id="canvasSize" class="state-value">0×0</span>
+            </div>
+            <div class="state-item">
+                <span class="state-label">Canvas CSS:</span>
+                <span id="canvasDisplaySize" class="state-value">0×0</span>
+            </div>
+        </div>
+    </div>
+
+    <h1>Shape Builder</h1>
+
+    <div class="controls">
+        <button id="addRect">Add Rectangle</button>
+        <button id="addSquare">Add Square</button>
+        <button id="addCircle">Add Circle</button>
+        <button id="addTriangle">Add Triangle</button>
+        <button id="addEllipse">Add Ellipse</button>
+        <button id="addStar">Add Star</button>
+        <button id="clearCanvas">Clear All</button>
+        <button id="toggleCollision" class="toggle-btn">Collision Avoidance: OFF</button>
+    </div>
+
+    <canvas id="myCanvas" width="800" height="500"></canvas>
+
+    <script type="module" src="/src/setup.ts"></script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Window State Display */
+.window-state {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    min-width: 180px;
+    user-select: none;
+}
+
+.window-state-header {
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-align: center;
+    color: #4CAF50;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 4px;
+}
+
+.window-state-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.state-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.state-label {
+    color: #ccc;
+    font-size: 10px;
+}
+
+.state-value {
+    color: #4CAF50;
+    font-weight: bold;
+    text-align: right;
+    font-size: 11px;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    color: #333;
+}
+
+/* Header */
+h1 {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 300;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+/* Controls container */
+.controls {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Buttons */
+button {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+    min-width: 140px;
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+button:hover::before {
+    width: 100px;
+    height: 100px;
+}
+
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Special button styles */
+#addRect {
+    background: linear-gradient(45deg, #28a745, #20c997);
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+
+#addCircle {
+    background: linear-gradient(45deg, #6f42c1, #e83e8c);
+    box-shadow: 0 4px 15px rgba(111, 66, 193, 0.3);
+}
+
+#clearCanvas {
+    background: linear-gradient(45deg, #dc3545, #fd7e14);
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+}
+
+#addSquare {
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+#addTriangle {
+    background: linear-gradient(45deg, #ff7675, #fd79a8);
+    box-shadow: 0 4px 15px rgba(255, 118, 117, 0.3);
+}
+
+#addEllipse {
+    background: linear-gradient(45deg, #a29bfe, #6c5ce7);
+    box-shadow: 0 4px 15px rgba(162, 155, 254, 0.3);
+}
+
+#addStar {
+    background: linear-gradient(45deg, #fdcb6e, #f39c12);
+    box-shadow: 0 4px 15px rgba(253, 203, 110, 0.3);
+}
+
+#toggleCollision {
+    background: linear-gradient(45deg, #6c757d, #495057);
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+    transition: all 0.3s ease;
+}
+
+#toggleCollision.active {
+    background: linear-gradient(45deg, #28a745, #20c997);
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.5);
+}
+
+/* Canvas */
+canvas {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 15px;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s ease;
+}
+/* Responsive design */
+@media (max-width: 768px) {
+    .window-state {
+        top: 10px;
+        right: 10px;
+        font-size: 10px;
+        min-width: 160px;
+        padding: 10px;
+    }
+    
+    .state-label {
+        font-size: 9px;
+    }
+    
+    .state-value {
+        font-size: 10px;
+    }
+
+    body {
+        padding: 15px;
+        gap: 20px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+        text-align: center;
+    }
+    
+    .controls {
+        padding: 15px;
+        gap: 10px;
+    }
+    
+    button {
+        padding: 10px 20px;
+        font-size: 14px;
+        min-width: 120px;
+    }
+    
+    canvas {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    button {
+        width: 100%;
+    }
+}
