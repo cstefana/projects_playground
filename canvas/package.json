@@ -1,0 +1,17 @@
+{
+  "type": "module",
+  "devDependencies": {
+    "@types/fabric": "^5.3.11",
+    "typescript": "^5.9.3",
+    "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "fabric": "^6.9.1",
+    "jspdf": "^4.1.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  }
+}
