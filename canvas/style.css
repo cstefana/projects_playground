@@ -57,6 +57,64 @@
     font-size: 11px;
 }
 
+/* Shape Buttons */
+.shape-buttons {
+    position: fixed;
+    top: 200px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    z-index: 999;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    min-width: 180px;
+    user-select: none;
+}
+
+.shape-buttons h3 {
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-align: center;
+    color: #4CAF50;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 4px;
+    font-size: 12px;
+}
+
+.shape-button-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.shape-button-grid button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 6px 8px;
+    font-size: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    min-width: auto;
+    font-family: 'Courier New', monospace;
+}
+
+.shape-button-grid button:hover {
+    background: rgba(76, 175, 80, 0.3);
+    border-color: #4CAF50;
+}
+
+.shape-button-grid button::before {
+    display: none;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -64,8 +122,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 30px;
+    gap: 20px;
     padding: 20px;
     color: #333;
 }
@@ -87,11 +144,27 @@ h1 {
     flex-wrap: wrap;
     justify-content: center;
     background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
+    padding: 15px;
     border-radius: 15px;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Main Layout */
+.main-layout {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 1400px;
+    width: 100%;
+}
+
+/* Canvas Container */
+.canvas-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 /* Buttons */
@@ -135,39 +208,9 @@ button:active {
 }
 
 /* Special button styles */
-#addRect {
-    background: linear-gradient(45deg, #28a745, #20c997);
-    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-}
-
-#addCircle {
-    background: linear-gradient(45deg, #6f42c1, #e83e8c);
-    box-shadow: 0 4px 15px rgba(111, 66, 193, 0.3);
-}
-
 #clearCanvas {
     background: linear-gradient(45deg, #dc3545, #fd7e14);
     box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
-}
-
-#addSquare {
-    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-}
-
-#addTriangle {
-    background: linear-gradient(45deg, #ff7675, #fd79a8);
-    box-shadow: 0 4px 15px rgba(255, 118, 117, 0.3);
-}
-
-#addEllipse {
-    background: linear-gradient(45deg, #a29bfe, #6c5ce7);
-    box-shadow: 0 4px 15px rgba(162, 155, 254, 0.3);
-}
-
-#addStar {
-    background: linear-gradient(45deg, #fdcb6e, #f39c12);
-    box-shadow: 0 4px 15px rgba(253, 203, 110, 0.3);
 }
 
 #toggleCollision {
@@ -211,7 +254,7 @@ canvas {
 
     body {
         padding: 15px;
-        gap: 20px;
+        gap: 15px;
     }
     
     h1 {
@@ -219,9 +262,40 @@ canvas {
         text-align: center;
     }
     
+    .main-layout {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .shape-sidebar {
+        min-width: auto;
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 15px;
+    }
+    
+    .shape-sidebar h3 {
+        display: none;
+    }
+    
+    .shape-sidebar button {
+        min-width: 120px;
+        flex-shrink: 0;
+    }
+    
     .controls {
         padding: 15px;
         gap: 10px;
+    }
+    
+    .dropdown-btn {
+        min-width: 140px;
+        font-size: 14px;
+    }
+    
+    .dropdown-content {
+        min-width: 180px;
     }
     
     button {
