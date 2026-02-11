@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import moviesData from '../movies.json';
 import MovieCard from './components/MovieCard';
+import MovieModal from './components/MovieModal';
 import GenreFilter from './components/GenreFilter';
 import RatingFilter from './components/RatingFilter';
 
@@ -9,6 +10,7 @@ function App() {
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [selectedRatings, setSelectedRatings] = useState([]);
     const [activePage, setActivePage] = useState('home');
+    const [selectedMovie, setSelectedMovie] = useState(null);
     const [watchlist, setWatchlist] = useState(() => {
         const saved = localStorage.getItem('watchlist');
         return saved ? JSON.parse(saved) : [];
@@ -107,6 +109,7 @@ function App() {
                                 movie={movie} 
                                 isWatchlisted={watchlist.includes(movie.id)}
                                 toggleWatchlist={() => toggleWatchlist(movie.id)}
+                                onOpen={() => setSelectedMovie(movie)}
                             />
                         ))}
                     </div>
@@ -122,11 +125,20 @@ function App() {
                                 movie={movie} 
                                 isWatchlisted={watchlist.includes(movie.id)}
                                 toggleWatchlist={() => toggleWatchlist(movie.id)}
+                                onOpen={() => setSelectedMovie(movie)}
                             />
                         ))}
                     </div>
                 )}
             </main>
+            {selectedMovie && (
+                <MovieModal
+                    movie={selectedMovie}
+                    onClose={() => setSelectedMovie(null)}
+                    isWatchlisted={watchlist.includes(selectedMovie.id)}
+                    toggleWatchlist={() => toggleWatchlist(selectedMovie.id)}
+                />
+            )}
         </div>
     );
 }

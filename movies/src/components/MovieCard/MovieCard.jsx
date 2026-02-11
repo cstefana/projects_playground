@@ -1,7 +1,7 @@
 import './MovieCard.css';
 import defaultImage from '../../assets/default.jpg';
 
-function MovieCard({ movie, isWatchlisted, toggleWatchlist }) {
+function MovieCard({ movie, isWatchlisted, toggleWatchlist, onOpen }) {
     const getImageSrc = (imageName) => {
         if (!imageName) return defaultImage;
         try {
@@ -32,7 +32,19 @@ function MovieCard({ movie, isWatchlisted, toggleWatchlist }) {
     };
 
     return (
-        <div key={movie.id} className={`movie-card ${isWatchlisted ? 'watchlisted' : ''}`}>
+        <div
+            key={movie.id}
+            className={`movie-card ${isWatchlisted ? 'watchlisted' : ''}`}
+            onClick={onOpen}
+            onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    onOpen();
+                }
+            }}
+            role="button"
+            tabIndex={0}
+        >
             <div className="movie-image">
                 <img 
                     src={getImageSrc(movie.image)} 
