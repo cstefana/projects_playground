@@ -8,6 +8,7 @@ function App() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [selectedRatings, setSelectedRatings] = useState([]);
+    const [activePage, setActivePage] = useState('home');
     const [watchlist, setWatchlist] = useState(() => {
         const saved = localStorage.getItem('watchlist');
         return saved ? JSON.parse(saved) : [];
@@ -48,43 +49,83 @@ function App() {
         return matchesSearch && matchesGenre && matchesRating;
     });
 
+    const watchlistMovies = moviesData.filter(movie => watchlist.includes(movie.id));
+
     return (
         <div className="app">
             <header>
                 <h1>Movie Collection</h1>
                 <p>Discover amazing movies from our collection</p>
-                
-                <input 
-                    type="text" 
-                    placeholder="Search movies..." 
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="search-input"
-                />
 
-                <div className="filter-controls">
-                    <GenreFilter 
-                        genres={genres} 
-                        selectedGenres={selectedGenres} 
-                        setSelectedGenres={setSelectedGenres} 
-                    />
-                    <RatingFilter 
-                        selectedRatings={selectedRatings}
-                        setSelectedRatings={setSelectedRatings}
-                    />
+                <div className="page-toggle">
+                    <button
+                        type="button"
+                        className={activePage === 'home' ? 'active' : ''}
+                        onClick={() => setActivePage('home')}
+                    >
+                        Home
+                    </button>
+                    <button
+                        type="button"
+                        className={activePage === 'watchlist' ? 'active' : ''}
+                        onClick={() => setActivePage('watchlist')}
+                    >
+                        Watchlist ({watchlist.length})
+                    </button>
                 </div>
+                
+                {activePage === 'home' && (
+                    <>
+                        <input 
+                            type="text" 
+                            placeholder="Search movies..." 
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="search-input"
+                        />
+
+                        <div className="filter-controls">
+                            <GenreFilter 
+                                genres={genres} 
+                                selectedGenres={selectedGenres} 
+                                setSelectedGenres={setSelectedGenres} 
+                            />
+                            <RatingFilter 
+                                selectedRatings={selectedRatings}
+                                setSelectedRatings={setSelectedRatings}
+                            />
+                        </div>
+                    </>
+                )}
             </header>
             <main>
-                <div className="movies-grid">
-                    {filteredMovies.map(movie => (
-                        <MovieCard 
-                            key={movie.id} 
-                            movie={movie} 
-                            isWatchlisted={watchlist.includes(movie.id)}
-                            toggleWatchlist={() => toggleWatchlist(movie.id)}
-                        />
-                    ))}
-                </div>
+                {activePage === 'home' && (
+                    <div className="movies-grid">
+                        {filteredMovies.map(movie => (
+                            <MovieCard 
+                                key={movie.id} 
+                                movie={movie} 
+                                isWatchlisted={watchlist.includes(movie.id)}
+                                toggleWatchlist={() => toggleWatchlist(movie.id)}
+                            />
+                        ))}
+                    </div>
+                )}
+                {activePage === 'watchlist' && (
+                    <div className="movies-grid">
+                        {watchlistMovies.length === 0 && (
+                            <div className="empty-state">Your watchlist is empty.</div>
+                        )}
+                        {watchlistMovies.map(movie => (
+                            <MovieCard 
+                                key={movie.id} 
+                                movie={movie} 
+                                isWatchlisted={watchlist.includes(movie.id)}
+                                toggleWatchlist={() => toggleWatchlist(movie.id)}
+                            />
+                        ))}
+                    </div>
+                )}
             </main>
         </div>
     );
