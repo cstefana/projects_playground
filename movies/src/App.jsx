@@ -1,16 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import moviesData from '../movies.json';
 import MovieCard from './components/MovieCard';
 import MovieModal from './components/MovieModal';
 import GenreFilter from './components/GenreFilter';
 import RatingFilter from './components/RatingFilter';
 
+const getMovieIdFromPath = (pathName) => {
+    const match = pathName.match(/^\/movie\/(\d+)(?:\/)?$/);
+    return match ? Number(match[1]) : null;
+};
+
 function App() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [selectedRatings, setSelectedRatings] = useState([]);
     const [activePage, setActivePage] = useState('home');
-    const [selectedMovie, setSelectedMovie] = useState(null);
+    const location = useLocation();
+    const navigate = useNavigate();
     const [watchlist, setWatchlist] = useState(() => {
         const saved = localStorage.getItem('watchlist');
         return saved ? JSON.parse(saved) : [];
@@ -19,6 +26,17 @@ function App() {
     useEffect(() => {
         localStorage.setItem('watchlist', JSON.stringify(watchlist));
     }, [watchlist]);
+
+    const routeMovieId = getMovieIdFromPath(location.pathname);
+    const selectedMovie = routeMovieId
+        ? moviesData.find((movie) => movie.id === routeMovieId)
+        : null;
+
+    useEffect(() => {
+        if (routeMovieId && !selectedMovie) {
+            navigate('/', { replace: true });
+        }
+    }, [navigate, routeMovieId, selectedMovie]);
 
     const toggleWatchlist = (movieId) => {
         setWatchlist(prev => 
@@ -109,7 +127,7 @@ function App() {
                                 movie={movie} 
                                 isWatchlisted={watchlist.includes(movie.id)}
                                 toggleWatchlist={() => toggleWatchlist(movie.id)}
-                                onOpen={() => setSelectedMovie(movie)}
+                                onOpen={() => navigate(`/movie/${movie.id}`)}
                             />
                         ))}
                     </div>
@@ -125,7 +143,7 @@ function App() {
                                 movie={movie} 
                                 isWatchlisted={watchlist.includes(movie.id)}
                                 toggleWatchlist={() => toggleWatchlist(movie.id)}
-                                onOpen={() => setSelectedMovie(movie)}
+                                onOpen={() => navigate(`/movie/${movie.id}`)}
                             />
                         ))}
                     </div>
@@ -134,7 +152,7 @@ function App() {
             {selectedMovie && (
                 <MovieModal
                     movie={selectedMovie}
-                    onClose={() => setSelectedMovie(null)}
+                    onClose={() => navigate('/', { replace: true })}
                     isWatchlisted={watchlist.includes(selectedMovie.id)}
                     toggleWatchlist={() => toggleWatchlist(selectedMovie.id)}
                 />
