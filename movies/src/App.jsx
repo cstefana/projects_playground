@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import moviesData from '../movies.json';
 import MovieCard from './components/MovieCard';
@@ -12,16 +12,68 @@ const getMovieIdFromPath = (pathName) => {
 };
 
 function App() {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [selectedGenres, setSelectedGenres] = useState([]);
-    const [selectedRatings, setSelectedRatings] = useState([]);
-    const [activePage, setActivePage] = useState('home');
     const location = useLocation();
     const navigate = useNavigate();
+    
+    // helper function to parse query parameters
+    const getQueryParams = useCallback(() => {
+        const params = new URLSearchParams(location.search);
+        return {
+            search: params.get('search') || '',
+            genres: params.get('genres') ? params.get('genres').split(',') : [],
+            ratings: params.get('ratings') ? params.get('ratings').split(',').map(r => parseInt(r)) : []
+        };
+    }, [location.search]);
+
+    // helper function to update URL with current filters
+    const updateURL = useCallback((filters) => {
+        const params = new URLSearchParams();
+        
+        if (filters.search) {
+            params.set('search', filters.search);
+        }
+        if (filters.genres.length > 0) {
+            params.set('genres', filters.genres.join(','));
+        }
+        if (filters.ratings.length > 0) {
+            params.set('ratings', filters.ratings.join(','));
+        }
+        
+        const newSearch = params.toString();
+        const newURL = newSearch ? `?${newSearch}` : location.pathname;
+        
+        navigate(newURL, { replace: true });
+    }, [navigate, location.pathname]);
+
+    // initialize state from URL query parameters
+    const initialFilters = getQueryParams();
+    const [searchTerm, setSearchTerm] = useState(initialFilters.search);
+    const [selectedGenres, setSelectedGenres] = useState(initialFilters.genres);
+    const [selectedRatings, setSelectedRatings] = useState(initialFilters.ratings);
+    const [activePage, setActivePage] = useState('home');
+    
     const [watchlist, setWatchlist] = useState(() => {
         const saved = localStorage.getItem('watchlist');
         return saved ? JSON.parse(saved) : [];
     });
+
+    // update state when URL changes
+    useEffect(() => {
+        const queryFilters = getQueryParams();
+        setSearchTerm(queryFilters.search);
+        setSelectedGenres(queryFilters.genres);
+        setSelectedRatings(queryFilters.ratings);
+    }, [getQueryParams]);
+
+    // update URL when filters change
+    useEffect(() => {
+        const filters = {
+            search: searchTerm,
+            genres: selectedGenres,
+            ratings: selectedRatings
+        };
+        updateURL(filters);
+    }, [searchTerm, selectedGenres, selectedRatings, updateURL]);
 
     useEffect(() => {
         localStorage.setItem('watchlist', JSON.stringify(watchlist));
@@ -92,6 +144,19 @@ function App() {
                     >
                         Watchlist ({watchlist.length})
                     </button>
+                    {(searchTerm || selectedGenres.length > 0 || selectedRatings.length > 0) && (
+                        <button
+                            type="button"
+                            className="clear-filters"
+                            onClick={() => {
+                                setSearchTerm('');
+                                setSelectedGenres([]);
+                                setSelectedRatings([]);
+                            }}
+                        >
+                            Clear Filters
+                        </button>
+                    )}
                 </div>
                 
                 {activePage === 'home' && (
