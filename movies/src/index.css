@@ -256,6 +256,19 @@ main h2 {
     box-shadow: 0 6px 14px rgba(69, 183, 209, 0.3);
 }
 
+.page-toggle button.clear-filters {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ff6b6b;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.page-toggle button.clear-filters:hover {
+    background-color: rgba(255, 107, 107, 0.15);
+    color: #ff6b6b;
+    opacity: 1;
+}
+
 .movies-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
