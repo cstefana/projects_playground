@@ -29,7 +29,7 @@
 .movie-image {
     position: relative;
     width: 100%;
-    aspect-ratio: 2/3;
+    aspect-ratio: 3/4;
     overflow: hidden;
 }
 
@@ -86,13 +86,13 @@
 }
 
 .movie-info {
-    padding: 1.5rem;
+    padding: 1rem 1.25rem 1.25rem;
 }
 
 .movie-title {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 700;
-    margin: 0 0 1rem 0;
+    margin: 0 0 0.75rem 0;
     color: #ffffff;
     font-family: 'Roboto Condensed', sans-serif;
     line-height: 1.3;
