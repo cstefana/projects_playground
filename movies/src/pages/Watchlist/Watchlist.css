@@ -1,0 +1,26 @@
+/* Watchlist page specific styles */
+.watchlist-page {
+    color: white;
+}
+
+.empty-state {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 3rem 2rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.empty-state h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    opacity: 0.9;
+}
+
+.empty-state p {
+    opacity: 0.7;
+    line-height: 1.6;
+}

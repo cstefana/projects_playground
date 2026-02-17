@@ -1,27 +1,29 @@
+import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import './MovieModal.css';
+import moviesData from '../../../movies.json';
 import defaultImage from '../../assets/default.jpg';
+import './MovieModal.css';
 
-function MovieModal({ movie, onClose, isWatchlisted, toggleWatchlist }) {
+function MovieModal({ watchlist, toggleWatchlist }) {
+    const { id } = useParams();
+    const navigate = useNavigate();
+
+    const movie = moviesData.find((m) => m.id === Number(id));
+
     useEffect(() => {
-        const handleKeyDown = (event) => {
-            if (event.key === 'Escape') {
-                onClose();
-            }
-        };
+        if (!movie) {
+            navigate('/', { replace: true });
+        }
+    }, [movie, navigate]);
 
-        document.addEventListener('keydown', handleKeyDown);
+    useEffect(() => {
         document.body.style.overflow = 'hidden';
-
         return () => {
-            document.removeEventListener('keydown', handleKeyDown);
             document.body.style.overflow = '';
         };
-    }, [onClose]);
+    }, []);
 
-    if (!movie) {
-        return null;
-    }
+    if (!movie) return null;
 
     const getImageSrc = (imageName) => {
         if (!imageName) return defaultImage;
@@ -52,10 +54,12 @@ function MovieModal({ movie, onClose, isWatchlisted, toggleWatchlist }) {
         return '#e74c3c';
     };
 
+    const isWatchlisted = watchlist.includes(movie.id);
+
     return (
-        <div className="movie-modal-backdrop" onClick={onClose}>
-            <div className="movie-modal" onClick={(event) => event.stopPropagation()}>
-                <button className="modal-close" type="button" onClick={onClose}>
+        <div className="movie-modal-backdrop" onClick={() => navigate(-1)}>
+            <div className="movie-modal" onClick={(e) => e.stopPropagation()}>
+                <button className="modal-close" type="button" onClick={() => navigate(-1)}>
                     Close
                 </button>
                 <div className="modal-content">
@@ -63,9 +67,7 @@ function MovieModal({ movie, onClose, isWatchlisted, toggleWatchlist }) {
                         <img
                             src={getImageSrc(movie.image)}
                             alt={movie.title}
-                            onError={(event) => {
-                                event.target.src = defaultImage;
-                            }}
+                            onError={(e) => { e.target.src = defaultImage; }}
                         />
                     </div>
                     <div className="modal-details">
@@ -81,16 +83,16 @@ function MovieModal({ movie, onClose, isWatchlisted, toggleWatchlist }) {
                                 className="modal-rating"
                                 style={{ color: getRatingColor(movie.rating) }}
                             >
-                                ⭐ {movie.rating}
+                                ★ {movie.rating}
                             </span>
                         </div>
                         <div className="modal-actions">
                             <button
                                 type="button"
                                 className={`modal-watchlist ${isWatchlisted ? 'active' : ''}`}
-                                onClick={toggleWatchlist}
+                                onClick={() => toggleWatchlist(movie.id)}
                             >
-                                {isWatchlisted ? 'Remove from watchlist' : 'Add to watchlist'}
+                                {isWatchlisted ? 'In Watchlist' : 'Add to Watchlist'}
                             </button>
                         </div>
                     </div>
