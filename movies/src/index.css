@@ -24,7 +24,6 @@ html {
 
 header {
     text-align: center;
-    margin: 1.5rem 0;
 }
 
 header img {
@@ -167,7 +166,6 @@ main h2 {
 
 .app header {
     text-align: center;
-    margin-bottom: 3rem;
     position: relative;
     z-index: 1000;
 }

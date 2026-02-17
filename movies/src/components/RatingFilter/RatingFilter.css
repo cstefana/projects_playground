@@ -1,5 +1,71 @@
 .rating-filter-container {
+    position: relative;
+    display: inline-block;
     margin: 0;
+}
+
+.custom-dropdown {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #e8e8e8;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    outline: none;
+    min-width: 200px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-dropdown:hover, .custom-dropdown.open {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: #ffd700;
+}
+
+.arrow {
+    font-size: 0.8rem;
+    transition: transform 0.2s ease;
+}
+
+.custom-dropdown.open .arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.option-label {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    color: #e8e8e8;
+    transition: background-color 0.2s ease;
+    user-select: none;
+}
+
+.option-label:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.option-label input[type="checkbox"] {
+    margin-right: 0.75rem;
+    accent-color: #ffd700;
 }
 
 .rating-select {
